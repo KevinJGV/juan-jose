@@ -1,10 +1,10 @@
 #EJERCICIO 1
-"""
+
 bandera = True
 cedula = "1"
-type1 = "Puerta a puerta"
-type2 = "Telemercadeo"
-type3 = "Ejecutivo de ventas"
+tp1 = "Puerta a puerta"
+tp2 = "Telemercadeo"
+tp3 = "Ejecutivo de ventas"
 sumatoriaVentas = 0
 sumatoriaComisiones = 0
 
@@ -14,7 +14,7 @@ while bandera == True:
         if cedula != "-1":
             name = input("Ingrese el nombre del vendedor: ")
             contVentas = float(input("Cuanto vendio en el mes: "))
-            vendedor = int(input(f"Ingrese el tipo de vendedor, donde:\n          [1]->{type1}\n          [2]->{type2}\n          [3]->{type3}\n ¿Que tipo de vendedor es?: "))
+            vendedor = int(input(f"Ingrese el tipo de vendedor, donde:\n    [1]->{tp1}\n    [2]->{tp2}\n    [3]->{tp3}\n ¿Que tipo de vendedor es?: "))
 
             if vendedor == 1:
                 comision = contVentas*(0.2)
@@ -60,7 +60,6 @@ while bandera == True:
 print("="*18,"INFORME GENERAL","="*18)
 print(f"El valor total a pagar a los conductores es: ${gananciaConductores:,.0f} COP")
 print(f"La cantidad de conductores NOVATOS es :{contNovatos} y la cantidad de conductores EXPERTOS es:{contExpert}")
-""" 
 
 #EJERCICIO 3
 bandera = True
