@@ -38,7 +38,7 @@ def leernombre(msj):
             print("Error al ingresar el nombre.", e)
             
 def leerint(msj):
-    while True:
+    while True: 
         try:
             n = int(input(msj))
             if n < 1:
