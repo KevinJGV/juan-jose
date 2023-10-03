@@ -95,6 +95,6 @@ def drawCircle(x = 0, y = 0, radius = 10):
 #draw a rectangle at (x, y) with the specified width and height
 def drawRectangle(x = 0, y = 0, width = 10, height = 10):
     turtle.penup()
-    turtle.goto(x = 0 + width / 2, y + height )
+    turtle.goto(x = 0 + width / 2, y + height(1) )
     
     
