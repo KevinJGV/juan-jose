@@ -43,19 +43,32 @@ def leerIDEmpl():
         except ValueError:
             print("Error al ingresar el ID.")
             
-def buscarEmpleado(lstEmpleado, idEmpl):
-    for i in range(len(lstEmpleado)):
-        if (lstEmpleado[i][0] == idEmpl):
-            return i
-    return -1
+def buscarEmpleado(dicEmpleados, idEmpl):
+    return idEmpl in dicEmpleados
 
+def mnubuscarEmpleado(dicEmpleados):
+    print("\n\n3. Buscar Empleado\n")
+    
+    idEmpl = leerIDEmpl()
+    existEmpl = buscarEmpleado(dicEmpleados, idEmpl)
+    if existEmpl == False:
+        print("El Empleado con ese código no ha sido ingresado.")
+        input()
+        return
+    
+    print("\n", "=" * 30)
+    print("Nombre:", dicEmpleados[idEmpl]["nombre"])
+    print("Horas trabajadas:", dicEmpleados[idEmpl]["HorasTrabajadas"])
+    print("Valor de la hora:", dicEmpleados[idEmpl]["ValorHora"])
+    print(f"Salario: ${dicEmpleados[idEmpl]['Salario']:,.2f}")
+    input("\n Presione cualquier tecla para volver al menu...")
 
-def modificarEmpleado(lstEmpleado):
+def modificarEmpleado(dicEmpleados):
     print("\n\n2. Modificar Empleado\n")
     
     idEmpl = leerIDEmpl()
-    posEmpl = buscarEmpleado(lstEmpleado, idEmpl)
-    if posEmpl == -1:
+    existEmpl = buscarEmpleado(dicEmpleados, idEmpl)
+    if existEmpl == False:
         print("El código del empleado no existe.")
         input()
         return
@@ -71,57 +84,60 @@ def modificarEmpleado(lstEmpleado):
     
     if op == 1:
         nombre = leerNombreEmpl()
-        lstEmpleado[posEmpl][1] = nombre
+        dicEmpleados[idEmpl]["nombre"] = nombre
     elif op == 2:
         cantHoras = leerHoraTrabEmpl()
-        lstEmpleado[posEmpl][2] = cantHoras
+        dicEmpleados[idEmpl]["HorasTrabajadas"] = cantHoras
+        
     elif op == 3:
         valHora = leerValHoraEmpl()
-        lstEmpleado[posEmpl][3] = valHora
+        dicEmpleados[idEmpl]["ValorHora"] = valHora
+        
+    dicEmpleados[idEmpl]["Salario"] = dicEmpleados[idEmpl]["ValorHora"] * dicEmpleados[idEmpl]["HorasTrabajadas"]
 
-def agregarEmpleado(lstEmpleado):
+def agregarEmpleado(dicEmpleados):
     print("\n\n*** 1. Agregar empleado\n")
-    lstDatos = []
+    dicDatos = {}
     id = leerIDEmpl()
-    if buscarEmpleado(lstEmpleado, id) != -1:
+    if buscarEmpleado(dicEmpleados, id) == True:
         print("El id ya existe en la lista")
         input()
         return
-    lstDatos.append(id)
-    lstDatos.append(leerNombreEmpl())
-    lstDatos.append(leerHoraTrabEmpl())
-    lstDatos.append(leerValHoraEmpl()) 
-    lstEmpleado.append(lstDatos)
-
-def deletEmpleado(lstEmpleado):
-    pos = buscarEmpleado(lstEmpleado, leerIDEmpl())
-    if pos != -1:
-        lstEmpleado.pop(pos)
-        print("     DI DE BAJA A UNO :(")
-    else:
-        print("     EL ID INGRESADO YA SE FUE :DD")
-
-def listarEmpleados(lstEmpleado):
-    bandera1 = 0
-    while True:
-        tamaña = len(lstEmpleado)
-        if tamaña <= 5:
-            for m in range(tamaña):
-                print(lstEmpleado[m])
-            input()
-            break
-        elif tamaña > 5:
-            for l in range(5):
-                if bandera1 < tamaña:
-                    print(lstEmpleado[bandera1])
-                    bandera1 += 1
-                else:
-                    print("NO HAY MAS EMPLEADO.")
-                    break
-            bandera2 = input("Desea continuar? (S//N)")
-            if  bandera2.lower() != "s":
-                break
     
+    dicDatos["nombre"] = leerNombreEmpl()
+    dicDatos["HorasTrabajadas"] = leerHoraTrabEmpl()
+    dicDatos["ValorHora"] = leerValHoraEmpl()
+    dicDatos["Salario"] = dicDatos["ValorHora"] * dicDatos["HorasTrabajadas"]
+    
+    dicEmpleados[id] = dicDatos
+
+def eliminarEmpleado(dicEmpleados):
+    print("\n\n4. Eliminar Empleado\n")
+    delEmpleados = {}
+    idEmpl = leerIDEmpl()
+    existEmpl = buscarEmpleado(dicEmpleados, idEmpl)
+    if existEmpl == False:
+        print("El código del empleado no existe.")
+        input()
+        return -1
+    elif existEmpl == True:
+        # del dicEmpleados[idEmpl]
+        dicEmpleados.pop(idEmpl)
+        print("El empleado ha escapado :) ")
+        return
+       
+def listarEmpleados(dicEmpleados):
+    for k, v in dicEmpleados.items():
+        print(f"id: {k}, Nombre: {v['nombre']},  horas laboradas: {v['HorasTrabajadas']}, precio de la hora laborada: {v['valorHora']}")
+def listarEmpleados2(dicEmpleados):
+    dicEmpleados = {"a", 0, "b", 1, "c", 2, "d", 3, "e", 4, "f", 5}
+    for k in dicEmpleados.keys():
+        i += 1
+        print(dicEmpleados[k])
+        if i%3 == 0:
+            a = input("Desea continuar? ")
+            if a != "s":
+                break
 def menu():
     while True:
         try:
@@ -145,64 +161,28 @@ def menu():
             print("Opción no válida. Escoja de 1 a 8.")
             input("Presione cualquier tecla para continuar...")
 
-def nominaEmpleado(lstEmpleado):
-    empleado = buscarEmpleado(lstEmpleado,leerIDEmpl)
-    saldoBruto = lstEmpleado[empleado][2] * lstEmpleado[empleado][3]
-    destEpsPension = saldoBruto * 0.08
-    if saldoBruto <= 1160000:
-        nomina = saldoBruto + 140000 - destEpsPension
-        
-        print("\n======================NOMINA===========================")
-        print(f"ID = {lstEmpleado[empleado][0]}     Empleado = {lstEmpleado[empleado][1]} ")
-        print("=========================================================")
-        print(f"Saldo Bruto:            ${saldoBruto:,.0f}COP")
-        print(f"Descuento S-P:              ${destEpsPension:,.0f}COP")
-        print(f"Auxilio de transporte:          $140,000COP")
-        print(f"Saldo neto:             ${nomina:,.0f}COP")
-        #print(f"El sueldo del empleado es :{nomina:,.0f} ")
-        input()
-    else:
-        nomina = saldoBruto - destEpsPension
-        print("\n======================NOMINA===========================")
-        print(f"ID = {lstEmpleado[empleado][0]}     Empleado = {lstEmpleado[empleado][1]} ")
-        print("=========================================================")
-        print(f"Saldo Bruto:            ${saldoBruto:,.0f}COP")
-        print(f"Descuento S-P:              ${destEpsPension:,.0f}COP")
-        print(f"Saldo neto:             ${nomina:,.0f}COP")
-        #print(f"El sueldo del empleado es :{nomina:,.0f} ")
-        input()
-
-def listarNomina(lstEmpelado):
-    pass
 ## PROGRAMA PRINCIPAL
-lstEmpleado = []
+dicEmpleados= {}
 while True:
     op = menu()
     if op == 1:
-        agregarEmpleado(lstEmpleado)
-        print(lstEmpleado)
-        input()
+        agregarEmpleado(dicEmpleados)
+        # print(dicEmpleados)
+        # input()
     elif op == 2:
-        modificarEmpleado(lstEmpleado)
+        modificarEmpleado(dicEmpleados)
+        # print(dicEmpleados)
+        # input()
     elif op == 3:
-        
-        empleado = buscarEmpleado(lstEmpleado,leerIDEmpl())
-        print("\nLos datos del empleado son : ")
-        print("ID ==", lstEmpleado[empleado][0])
-        print("NOMBRE ==", lstEmpleado[empleado][1])
-        print("HORAS ==", lstEmpleado[empleado][2])
-        print("VALORHORAS ==", lstEmpleado[empleado][3])
-        input()
-        
+        mnubuscarEmpleado(dicEmpleados)
     elif op == 4:
-        deletEmpleado(lstEmpleado)
+        eliminarEmpleado(dicEmpleados)
     elif op == 5:
-        listarEmpleados(lstEmpleado)
+        listarEmpleados(dicEmpleados)
     elif op == 6:
-        nominaEmpleado(lstEmpleado)
+        listarEmpleados2(dicEmpleados)
     elif op == 7:
         pass
     elif op == 8:
         print("\n\nGracias por usar el software. Adios")
         break
-print(lstEmpleado)

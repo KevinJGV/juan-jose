@@ -50,8 +50,7 @@ print(empleado.pop("salario"))
 print(empleado)
 
 #popitem
-print(empleado.popitem())
-print(empleado)
+C
 
 #setdefault
 print(empleado.setdefault("Nombre", "Carlos"))
