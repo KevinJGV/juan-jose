@@ -56,3 +56,5 @@ C
 print(empleado.setdefault("Nombre", "Carlos"))
 print(empleado.setdefault("Ciudad", "Bucaramanga"))
 print(empleado)
+
+dict.dele
