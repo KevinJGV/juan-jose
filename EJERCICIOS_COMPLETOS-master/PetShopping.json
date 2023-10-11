@@ -1,0 +1,23 @@
+{
+    "Pets": [
+        {
+            "Type": "CAT",
+            "Breed": "PERSA",
+            "Size": "MEDIUM",
+            "Price": 10000.0,
+            "Services": [
+                "HOTELÇ",
+                "FOOD"
+            ]
+        },
+        {
+            "Type": "CAT",
+            "Breed": "PERSA",
+            "Size": "SMALL",
+            "Price": 120000.0,
+            "Services": [
+                "NOTHING"
+            ]
+        }
+    ]
+}
