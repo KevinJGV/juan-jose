@@ -1,42 +1,41 @@
 def main():
 
-    red_ferrocarriles = {}
-
+    redFerrocarriles = {}
 
     N = int(input("Número de ciudades: "))
 
-    
     for i in range(N):
-        nombre_ciudad = input(f"Nombre de la ciudad {i + 1}: ")
-        conexiones = input(f"Ciudades enlazadas para {nombre_ciudad}: ").split(',')
-        red_ferrocarriles[nombre_ciudad] = conexiones
+        nombreCiudad = input(f"Nombre de la ciudad {i + 1}: ")
+        conexiones = input(f"Ciudades enlazadas a {nombreCiudad}: ").split(',')
+        redFerrocarriles[nombreCiudad] = conexiones
 
 
-    ciudad_origen = input("Ciudad de origen: ")
-    ciudad_destino = input("Ciudad de destino: ")
+    ciudadOrigen = input("Ciudad de salida: ")
+    ciudadDestino = input("Ciudad de destino: ")
 
 
-    if hay_via_directa(red_ferrocarriles, ciudad_origen, ciudad_destino):
+    if hayViaDirecta(redFerrocarriles, ciudadOrigen, ciudadDestino):
         print("Hay una vía directa entre las ciudades.")
     else:
         print("No hay una vía directa entre las ciudades.")
 
-def hay_via_directa(red_ferrocarriles, ciudad_origen, ciudad_destino):
+def hayViaDirecta(redFerrocarriles, ciudadOrigen, ciudadDestino):
     visitados = set()
-    cola = [ciudad_origen]
+    via = [ciudadOrigen]
 
-    while cola:
-        ciudad_actual = cola.pop(0)
-        if ciudad_actual == ciudad_destino:
+    while via:
+        ciudadActual = via.pop(0)
+        if ciudadActual == ciudadDestino:
             return True
 
-        visitados.add(ciudad_actual)
+        visitados.add(ciudadActual)
 
-        for ciudad_vecina in red_ferrocarriles.get(ciudad_actual, []):
-            if ciudad_vecina not in visitados:
-                cola.append(ciudad_vecina)
+        for ciudadVecina in redFerrocarriles.get(ciudadActual, []):
+            if ciudadVecina not in visitados:
+                via.append(ciudadVecina)
 
     return False
 
 if __name__ == "__main__":
     main()
+    
